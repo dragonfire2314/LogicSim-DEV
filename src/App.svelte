@@ -2,7 +2,7 @@
 	import Canvas from './canvas.svelte';
 
 	function handleClick() {
-		alert("Clicked");
+		alert("pressed");
 	}
 </script>
 

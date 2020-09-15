@@ -1,5 +1,5 @@
 <script>
-    import Gate from './gate.svelte';
+    import Gates from './gates.svelte';
     
     let scale = 1;
 
@@ -18,7 +18,10 @@
 	div {
         width: 100%;
         height: 100%;
-        background-image: url(./grid.png);
+        /*background-image: url(./grid.png);*/
+        background-color: #d6d6d6;
+
+        position: relative;
 
         transform: scale(1);
     }
@@ -27,5 +30,5 @@
 <svelte:window on:keypress={keypressing}/>
 
 <div>
-    <Gate/>
+    <Gates/>
 </div>

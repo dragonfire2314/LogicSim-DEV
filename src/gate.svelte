@@ -1,15 +1,29 @@
 <script>
-	let x_pos = 200;
-    let y_pos = 200;
-    
+    import { onMount } from 'svelte';
 
-    function movement(event) {
-        x_pos = event.pageX;
-        y_pos = event.pageY;
+    export let x_pos = 0;
+    export let y_pos = 0;
+    export let image;
 
-        //document.getElementById("moveME").style.left = x_pos + "px";
-        //document.getElementById("moveME").style.top = y_pos + "px";
+    let real_x_pos = 0;
+    let real_y_pos = 0;
+
+    onMount(async () => {
+        console.log("test");
+		document.getElementById("gate").style.left = x_pos + "px";
+        document.getElementById("gate").style.top = y_pos + "px";
+        document.getElementById("gate").style.backgroundImage = "url(" + image + ")";        
+    });
+
+    function updatePosition() {
+        document.getElementById("gate").style.left = x_pos + "px";
+        document.getElementById("gate").style.top = y_pos + "px";
     }
+
+    $: if (x_pos || y_pos) {
+        updatePosition();
+	}
+
 </script>
 
 <style>
@@ -20,10 +34,11 @@
         background-repeat: no-repeat;
         background-size: cover;
         position: absolute;
-        top: 50px;
+        z-index: -1;
+
+        left: 0px;
+        top: 0px;
     }
 </style>
 
-<svelte:window on:mousemove={movement}/>
-
-<div id="moveME"></div>
+<div id="gate"></div>
