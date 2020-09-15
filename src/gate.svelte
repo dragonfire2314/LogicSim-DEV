@@ -8,16 +8,20 @@
     let real_x_pos = 0;
     let real_y_pos = 0;
 
+    let dom;
+
     onMount(async () => {
-        console.log("test");
-		document.getElementById("gate").style.left = x_pos + "px";
-        document.getElementById("gate").style.top = y_pos + "px";
-        document.getElementById("gate").style.backgroundImage = "url(" + image + ")";        
+        console.log(dom);
+		dom.style.left = x_pos + "px";
+        dom.style.top = y_pos + "px";
+        dom.style.backgroundImage = "url(" + image + ")";        
     });
 
     function updatePosition() {
-        document.getElementById("gate").style.left = x_pos + "px";
-        document.getElementById("gate").style.top = y_pos + "px";
+        if (dom) {
+            dom.style.left = x_pos + "px";
+            dom.style.top = y_pos + "px";
+        }
     }
 
     $: if (x_pos || y_pos) {
@@ -35,10 +39,7 @@
         background-size: cover;
         position: absolute;
         z-index: -1;
-
-        left: 0px;
-        top: 0px;
     }
 </style>
 
-<div id="gate"></div>
+<div bind:this={dom}></div>

@@ -18,13 +18,13 @@
 
     let gates = [
         { realPosition: new Vector(0,0), screenPosition: new Vector(0,0) },
-        { realPosition: new Vector(50,0), screenPosition: new Vector(0,0) }
+        { realPosition: new Vector(50,0), screenPosition: new Vector(50,0) }
     ];
 
     let screenPos = new Vector(0, 0);
     let isGrabbing = false;
     let begGrabPos;
-    let endGrabPos
+    let endGrabPos;
 
     function mouseDown(event) {
         isGrabbing = true;
@@ -38,14 +38,27 @@
         screenPos.add(begGrabPos);
 
         for (var i = 0; i < gates.length; i++) {
-            var temp = new Vector(screenPos.x, screenPos.y);
-            temp.sub(gates[i].realPosition);
+            var temp = new Vector(gates[i].realPosition.x, gates[i].realPosition.y);
+            temp.sub(screenPos);
             gates[i].screenPosition = temp;
         }
     }
     function mouseMove(event) {
         if (isGrabbing) {
-            
+            endGrabPos = new Vector(event.pageX, event.pageY);
+
+            var begGrabCopy = new Vector(begGrabPos.x, begGrabPos.y);
+
+            begGrabCopy.sub(endGrabPos);
+            screenPos.add(begGrabCopy);
+
+            begGrabPos = new Vector(endGrabPos.x, endGrabPos.y);
+
+            for (var i = 0; i < gates.length; i++) {
+                var temp = new Vector(gates[i].realPosition.x, gates[i].realPosition.y);
+                temp.sub(screenPos);
+                gates[i].screenPosition = temp;
+            }
         }
     }
 </script>
@@ -57,5 +70,5 @@
 <svelte:window on:mousedown={mouseDown} on:mouseup={mouseUp} on:mousemove={mouseMove}/>
 
 {#each gates as gate, i}
-    <Gate x_pos={gate.screenPosition.x} y_pos={gate.screenPosition.y} image={"./build/ADN.svg"}/>
+    <Gate x_pos={gates[i].screenPosition.x} y_pos={gates[i].screenPosition.y} image={"./build/ADN.svg"}/>
 {/each}
