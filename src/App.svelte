@@ -1,6 +1,8 @@
 <script>
 	import Canvas from './canvas.svelte';
 
+	let canvas;
+
 	function handleClick() {
 		alert("pressed");
 	}
@@ -32,10 +34,10 @@
 
 <div class="main">
 	<div class="menu">
-		<button on:click={handleClick}>AND</button>
-		<button on:click={handleClick}>NAND</button>
+		<button on:click={() => canvas.addGate("AND")}>AND</button>
+		<button on:click={() => canvas.addGate("NAND")}>NAND</button>
 	</div>
 	<div class="canvas">
-		<Canvas/>
+		<Canvas bind:this={canvas}/>
 	</div>
 </div>
