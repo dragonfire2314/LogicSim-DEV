@@ -1,7 +1,12 @@
 <script>
+	import { onMount } from 'svelte';
 	import Canvas from './canvas.svelte';
 
 	let canvas;
+
+	onMount(async () => {
+        document.addEventListener('contextmenu', event => event.preventDefault());       
+    });
 
 	function handleClick() {
 		alert("pressed");

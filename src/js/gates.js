@@ -1,4 +1,4 @@
-class Wire {
+export class Wire {
     constructor () {
         this.state = false;
         this.gate;
@@ -19,7 +19,7 @@ class Wire {
     }
 }
 
-class Gate {
+export class Gate {
     constructor(inputCount, outputCount) {
         this.Inputs = new Array();
         for (var i = 0; i < inputCount; i++)
@@ -38,7 +38,7 @@ class Gate {
     }
 }
 
-class NAND extends Gate{
+export class NAND extends Gate{
     constructor() {
         super(2, 1);
     }

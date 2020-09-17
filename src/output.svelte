@@ -6,9 +6,8 @@
     export let y_pos = 0;
 
     export let wire;
-    export let gate;
 
-    export let inputCallback;
+    export let outputCallback;
 
     let line_dom;
     let circle_dom;
@@ -18,7 +17,7 @@
         circle_dom.style.top = y_pos + "px";
         circle_dom.style.backgroundImage = "url(build/PORT_CIRCLE.svg)";
 
-        line_dom.style.left = x_pos + 11 + "px";
+        line_dom.style.left = x_pos - 11 + "px";
         line_dom.style.top = y_pos + 7 + "px";
         line_dom.style.backgroundImage = "url(build/PORT_LINE.svg)";
 
@@ -33,7 +32,7 @@
     }
     function mouseDown() {
         let temp = circle_dom.parentNode.style;
-        inputCallback(x_pos + parseInt(temp.left) + 8, y_pos + parseInt(temp.top) + 8, wire, gate);
+        outputCallback(x_pos + parseInt(temp.left) + 8, y_pos + parseInt(temp.top) + 8, wire);
     }
 
 </script>
