@@ -41,6 +41,7 @@
 	<div class="menu">
 		<button on:click={() => canvas.addGate("AND")}>AND</button>
 		<button on:click={() => canvas.addGate("NAND")}>NAND</button>
+		<button on:click={() => canvas.debugGates()}>DEBUG</button>
 	</div>
 	<div class="canvas">
 		<Canvas bind:this={canvas}/>

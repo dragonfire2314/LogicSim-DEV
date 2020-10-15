@@ -16,7 +16,6 @@
 
     onMount(async () => {
         //Move to position assigned by the creator on startup
-        console.log(dom);
 		dom.style.left = x_pos + "px";
         dom.style.top = y_pos + "px";
         dom.style.backgroundImage = "url(" + image + ")";     
@@ -48,7 +47,7 @@
 
 <div bind:this={dom}>
     {#each gate.Inputs as input, i}
-        <Input x_pos={-26} y_pos={i * 16} wire={input} gate={gate} inputCallback={inputCallback}/>
+        <Input x_pos={-26} y_pos={i * 16} wireIndex={i} gate={gate} inputCallback={inputCallback}/>
     {/each}
     {#each gate.Outputs as output, i}
         <Output x_pos={42} y_pos={7} wire={output} outputCallback={outputCallback}/>

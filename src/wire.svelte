@@ -5,9 +5,23 @@
     export let start_x_pos, start_y_pos;
     export let end_x_pos, end_y_pos;
 
-    onMount(async () => {
+    export let wire;
 
+    let color = "white";
+
+    onMount(async () => {
+        if (wire.getState()) {
+            //console.log("I want to get this function to be called");
+            color = "blue";
+        }
+        else { color = "white"; }
     });
+
+    $: if (wire.getState()) {
+        //console.log("I want to get this function to be called");
+        color = "blue";
+    }
+    else { color = "white"; }
 
 </script>
 
@@ -24,5 +38,5 @@
 
 <path d="M {start_x_pos} {start_y_pos} 
     C {start_x_pos + 128} {start_y_pos}, {end_x_pos - 128} {end_y_pos}, {end_x_pos} {end_y_pos}"
-    stroke="white" fill="transparent" stroke-width="3"
+    stroke={color} fill="transparent" stroke-width="3"
 />

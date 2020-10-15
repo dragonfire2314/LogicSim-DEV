@@ -20,8 +20,6 @@
         line_dom.style.left = x_pos - 11 + "px";
         line_dom.style.top = y_pos + 7 + "px";
         line_dom.style.backgroundImage = "url(build/PORT_LINE.svg)";
-
-        console.log(wire);
     });
 
     function hoving(event) {

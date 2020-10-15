@@ -5,7 +5,7 @@
     export let x_pos = 0;
     export let y_pos = 0;
 
-    export let wire;
+    export let wireIndex;
     export let gate;
 
     export let inputCallback;
@@ -21,8 +21,6 @@
         line_dom.style.left = x_pos + 11 + "px";
         line_dom.style.top = y_pos + 7 + "px";
         line_dom.style.backgroundImage = "url(build/PORT_LINE.svg)";
-
-        console.log(wire);
     });
 
     function hoving(event) {
@@ -33,7 +31,7 @@
     }
     function mouseDown() {
         let temp = circle_dom.parentNode.style;
-        inputCallback(x_pos + parseInt(temp.left) + 8, y_pos + parseInt(temp.top) + 8, wire, gate);
+        inputCallback(x_pos + parseInt(temp.left) + 8, y_pos + parseInt(temp.top) + 8, wireIndex, gate);
     }
 
 </script>

@@ -1,4 +1,5 @@
 <script>
+    import { onMount } from 'svelte';
     import Gate from './gate.svelte';
     import Wire from './wire.svelte';
     import { NAND } from './js/gates.js'
@@ -23,8 +24,8 @@
     };
 
     let gates = [
-        { id: '0', position: new Vector(64,32),  image: "./build/AND_GATE.svg", gate: new NAND() },
-        { id: '1', position: new Vector(128,0), image: "./build/AND_GATE.svg",  gate: new NAND() }
+        //{ id: '0', position: new Vector(64,32),  image: "./build/AND_GATE.svg", gate: new NAND() },
+        //{ id: '1', position: new Vector(128,0), image: "./build/AND_GATE.svg",  gate: new NAND() }
     ];
 
     let wires = [
@@ -45,6 +46,10 @@
     let isGrabbing = false;
     let begGrabPos;
     let endGrabPos;
+
+    onMount(async () => {
+        //Call the update function on all the gates that already exist
+    });
 
     function mouseDown(event) {
         //Placing a gate
@@ -143,28 +148,37 @@
 
     let isWire = false;
     let placingWire;
-    let placingOutWire;
 
     export function outputCallback(x_pos, y_pos, outWire) {
         isWire = true;
-        console.log(x_pos);
-        console.log(y_pos);
         placingWire = {
             startPos: new Vector(x_pos, y_pos),
-            endPos: new Vector(x_pos, y_pos)
+            endPos: new Vector(x_pos, y_pos),
+            wire: outWire
         };
-        placingOutWire = outWire;
     }
 
-    export function inputCallback(x_pos, y_pos, inWire, inGate) {
+    export function inputCallback(x_pos, y_pos, inWireIndex, inGate) {
         if (isWire) {
             isWire = false;
             placingWire.endPos = new Vector(x_pos, y_pos);
             wires = [...wires, placingWire];
             //Connect simulator
-            placingOutWire.gate = inGate;
-            inWire = placingOutWire;
+            placingWire.wire.gate = inGate;
+            placingWire.wire.port = inGate.Inputs[inWireIndex];
+            placingWire.wire.port.setState(placingWire.wire.getState());
+            
+            //Update the simulator
+            placingWire.wire.gate.update();
         }
+    }
+
+    export function debugGates() {
+        //Print info about all gates
+        console.log("Gate debug:");
+        console.log("Gates: ");
+        for(var i = 0; i < gates.length; i++)
+            console.log(gates[i].gate)
     }
 
     function offset(el) {
@@ -206,12 +220,12 @@
             <svg width="2048" height="2048">
                 {#each wires as wire, i}
                     <Wire start_x_pos={wires[i].startPos.x} start_y_pos={wires[i].startPos.y}
-                        end_x_pos={wires[i].endPos.x} end_y_pos={wires[i].endPos.y}
+                        end_x_pos={wires[i].endPos.x} end_y_pos={wires[i].endPos.y} wire={placingWire.wire}
                     />
                 {/each}
                 {#if isWire}
                     <Wire start_x_pos={placingWire.startPos.x} start_y_pos={placingWire.startPos.y}
-                        end_x_pos={placingWire.endPos.x} end_y_pos={placingWire.endPos.y}
+                        end_x_pos={placingWire.endPos.x} end_y_pos={placingWire.endPos.y} wire={placingWire.wire}
                     />
                 {/if}
             </svg>
