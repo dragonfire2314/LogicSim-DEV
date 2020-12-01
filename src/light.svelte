@@ -1,17 +1,15 @@
 <script>
     import { onMount } from 'svelte';
     import Input from './input.svelte';
-    import Output from './output.svelte';
 
     export let x_pos = 0;
     export let y_pos = 0;
     export let image;
 
     export let inputCallback;
-    export let outputCallback;
 
+    export let state;
     export let inputs;
-    export let outputs;
     export let id;
 
     let dom;
@@ -30,15 +28,24 @@
         }
     }
 
+    $: if (state) {
+        dom.style.backgroundColor = 'blue';
+    }
+    else {
+        if (dom !== undefined)
+            dom.style.backgroundColor = 'white';
+    }
+
     //Called whenever x or y position is updated externally from parent or internally
     $: if (x_pos || y_pos) {
         updatePosition();
-    } 
+    }
 
 </script>
 
 <style>
 	div {
+        background-color: blue;
         width: 32px;
         height: 32px;
         background-repeat: no-repeat;
@@ -50,8 +57,5 @@
 <div bind:this={dom}>
     {#each Array(inputs) as _, i}
         <Input x_pos={-26} y_pos={i * 16} wireIndex={i} id={id} inputCallback={inputCallback}/>
-    {/each}
-    {#each Array(outputs) as _, i}
-        <Output x_pos={42} y_pos={7} id={id} outputCallback={outputCallback}/>
     {/each}
 </div>

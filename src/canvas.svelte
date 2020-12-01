@@ -1,8 +1,11 @@
 <script>
     import { onMount } from 'svelte';
     import Gate from './gate.svelte';
+    import UserInput from './userInput.svelte';
     import Wire from './wire.svelte';
     import { NAND } from './js/gates.js'
+    import { evaluate } from './js/newSim.js'
+    import Light from './light.svelte';
 
     class Vector {
         constructor(x, y) {
@@ -23,6 +26,15 @@
         }
     };
 
+    const indexBy = (array, prop) => array.reduce((output, item) => {
+        output[item[prop]] = item;
+        return output;
+    }, {});
+
+    let components = [
+
+    ];
+
     let gates = [
         //{ id: '0', position: new Vector(64,32),  image: "./build/AND_GATE.svg", gate: new NAND() },
         //{ id: '1', position: new Vector(128,0), image: "./build/AND_GATE.svg",  gate: new NAND() }
@@ -32,6 +44,8 @@
         
     ];
 
+    let nextGateID = 0;
+
     let mousePosition;
     let workspaceDom;
     let zoomLayerDom;
@@ -40,6 +54,7 @@
 
     let isPlacing = false;
     let placingGate;
+    let placingComponent;
 
     let scale = 1;
     let screenPos = new Vector(0, 0);
@@ -57,8 +72,8 @@
             //Add to list of gates
             gates = [...gates, placingGate];
             isPlacing = false;
-            //Update simulator
-            placingGate.gate.update();
+            //Add gate to componets array
+            components = [...components, placingComponent];
         }
         if (event.button === 2) {
             //Moving around the workspace
@@ -128,57 +143,288 @@
     }
 
     export function addGate(gateType) {
+        let zoomLayerOffset = offset(zoomLayerDom);
+        zoomLayerOffset.left *= (1/scale);
+        zoomLayerOffset.top *= (1/scale);
+
         switch (gateType) {
         case "AND":
-            let zoomLayerOffset = offset(zoomLayerDom);
-            zoomLayerOffset.left *= (1/scale);
-            zoomLayerOffset.top *= (1/scale);
             placingGate = { 
+                id: nextGateID.toString(),
                 position: new Vector((1/scale) * event.pageX - zoomLayerOffset.left, (1/scale) * event.pageY - zoomLayerOffset.top), 
-                image: "./build/AND_GATE.svg",
-                gate: new NAND()
+                image: "./build/NEW_AND.svg",
+                inputs: 2,
+                outputs: 1,
+                logic_button: 0,
+                state: 0
+            }
+            placingComponent = {
+                id: nextGateID.toString(),
+                type: 'and',
+                inputs: [],
+                state: 0,
             }
             isPlacing = true;
+            nextGateID++;
             break;
         case "NAND":
+            placingGate = { 
+                id: nextGateID.toString(),
+                position: new Vector((1/scale) * event.pageX - zoomLayerOffset.left, (1/scale) * event.pageY - zoomLayerOffset.top), 
+                image: "./build/NEW_NAND.svg",
+                inputs: 2,
+                outputs: 1,
+                logic_button: 0,
+                state: 0
+            }
+            placingComponent = {
+                id: nextGateID.toString(),
+                type: 'nand',
+                inputs: [],
+                state: 0,
+            }
+            isPlacing = true;
+            nextGateID++;
+            break;
+        case "0":
+            placingGate = { 
+                id: nextGateID.toString(),
+                position: new Vector((1/scale) * event.pageX - zoomLayerOffset.left, (1/scale) * event.pageY - zoomLayerOffset.top), 
+                image: "./build/AND_GATE.svg",
+                inputs: 0,
+                outputs: 1,
+                logic_button: 0,
+                state: 0
+            }
+            placingComponent = {
+                id: nextGateID.toString(),
+                type: 'controlled',
+                inputs: [],
+                state: 0,
+            }
+            isPlacing = true;
+            nextGateID++;
+            break;
+        case "1":
+            placingGate = { 
+                id: nextGateID.toString(),
+                position: new Vector((1/scale) * event.pageX - zoomLayerOffset.left, (1/scale) * event.pageY - zoomLayerOffset.top), 
+                image: "./build/AND_GATE.svg",
+                inputs: 0,
+                outputs: 1,
+                logic_button: 0,
+                state: 0
+            }
+            placingComponent = {
+                id: nextGateID.toString(),
+                type: 'controlled',
+                inputs: [],
+                state: 1,
+            }
+            isPlacing = true;
+            nextGateID++;
+            break;
+        case "Logic_Button":
+            placingGate = { 
+                id: nextGateID.toString(),
+                position: new Vector((1/scale) * event.pageX - zoomLayerOffset.left, (1/scale) * event.pageY - zoomLayerOffset.top), 
+                image: "./build/AND_GATE.svg",
+                inputs: 0,
+                outputs: 1,
+                logic_button: 1,
+                state: 0
+            }
+            placingComponent = {
+                id: nextGateID.toString(),
+                type: 'controlled',
+                inputs: [],
+                state: 0,
+            }
+            isPlacing = true;
+            nextGateID++;
+            break;
+        case "Light":
+            placingGate = { 
+                id: nextGateID.toString(),
+                position: new Vector((1/scale) * event.pageX - zoomLayerOffset.left, (1/scale) * event.pageY - zoomLayerOffset.top), 
+                image: "./build/Light.svg",
+                inputs: 1,
+                outputs: 0,
+                logic_button: 2,
+                state: 0
+            }
+            placingComponent = {
+                id: nextGateID.toString(),
+                type: 'equal',
+                inputs: [],
+                state: 0,
+            }
+            isPlacing = true;
+            nextGateID++;
+            break;
+        case "OR":
+            placingGate = { 
+                id: nextGateID.toString(),
+                position: new Vector((1/scale) * event.pageX - zoomLayerOffset.left, (1/scale) * event.pageY - zoomLayerOffset.top), 
+                image: "./build/OR_GATE.svg",
+                inputs: 2,
+                outputs: 1,
+                logic_button: 0,
+                state: 0
+            }
+            placingComponent = {
+                id: nextGateID.toString(),
+                type: 'or',
+                inputs: [],
+                state: 0,
+            }
+            isPlacing = true;
+            nextGateID++;
+            break;
+        case "XOR":
+            placingGate = { 
+                id: nextGateID.toString(),
+                position: new Vector((1/scale) * event.pageX - zoomLayerOffset.left, (1/scale) * event.pageY - zoomLayerOffset.top), 
+                image: "./build/XOR_GATE.svg",
+                inputs: 2,
+                outputs: 1,
+                logic_button: 0,
+                state: 0
+            }
+            placingComponent = {
+                id: nextGateID.toString(),
+                type: 'xor',
+                inputs: [],
+                state: 0,
+            }
+            isPlacing = true;
+            nextGateID++;
+            break;
+        case "NOT":
+            placingGate = { 
+                id: nextGateID.toString(),
+                position: new Vector((1/scale) * event.pageX - zoomLayerOffset.left, (1/scale) * event.pageY - zoomLayerOffset.top), 
+                image: "./build/NOT_GATE.svg",
+                inputs: 1,
+                outputs: 1,
+                logic_button: 0,
+                state: 0
+            }
+            placingComponent = {
+                id: nextGateID.toString(),
+                type: 'not',
+                inputs: [],
+                state: 0,
+            }
+            isPlacing = true;
+            nextGateID++;
+            break;
+        case "NOR":
+            placingGate = { 
+                id: nextGateID.toString(),
+                position: new Vector((1/scale) * event.pageX - zoomLayerOffset.left, (1/scale) * event.pageY - zoomLayerOffset.top), 
+                image: "./build/NOR_GATE.svg",
+                inputs: 2,
+                outputs: 1,
+                logic_button: 0,
+                state: 0
+            }
+            placingComponent = {
+                id: nextGateID.toString(),
+                type: 'nor',
+                inputs: [],
+                state: 0,
+            }
+            isPlacing = true;
+            nextGateID++;
             break;
         }
     }
 
+    function getComponent(id) 
+    {
+        for (let i = 0; i < components.length; i++) { 
+            if (components[i].id === id) {
+                return components[i];
+            }
+        }
+    }
 
     let isWire = false;
     let placingWire;
+    let outputID;
 
-    export function outputCallback(x_pos, y_pos, outWire) {
+    export function outputCallback(x_pos, y_pos, id) {
+        console.log("Output callback");
         isWire = true;
+        outputID = id;
+        let internalState = getComponent(id).state;
         placingWire = {
             startPos: new Vector(x_pos, y_pos),
             endPos: new Vector(x_pos, y_pos),
-            wire: outWire
+            id: id,
+            state: internalState //Should be 'x'?
         };
     }
 
-    export function inputCallback(x_pos, y_pos, inWireIndex, inGate) {
+    export function inputCallback(x_pos, y_pos, inWireIndex, id) {
+        console.log("Input callback");
         if (isWire) {
             isWire = false;
             placingWire.endPos = new Vector(x_pos, y_pos);
             wires = [...wires, placingWire];
-            //Connect simulator
-            placingWire.wire.gate = inGate;
-            placingWire.wire.port = inGate.Inputs[inWireIndex];
-            placingWire.wire.port.setState(placingWire.wire.getState());
-            
-            //Update the simulator
-            placingWire.wire.gate.update();
+            //Connect components in the array
+            for (let i = 0; i < components.length; i++) { 
+                if (components[i].id === id) {
+                    components[i].inputs.push(outputID);
+                }
+            }
         }
     }
 
     export function debugGates() {
         //Print info about all gates
         console.log("Gate debug:");
-        console.log("Gates: ");
-        for(var i = 0; i < gates.length; i++)
-            console.log(gates[i].gate)
+        console.log("Components Array: ");
+        console.log(components);
+    }
+
+    export function simulatate() {
+        //Idk does something lol
+        const componentLookup = indexBy(components, 'id');
+        //Run for 1 step
+        for (let iteration = 0; iteration < 1; iteration++) {
+            for (let i = 0; i < 5; i++) {
+                evaluate(components, componentLookup);
+            }
+        }
+        //Update wire states for rendering purpose (Inefficent temp code)
+        for (let w = 0; w < wires.length; w++) { 
+            for (let i = 0; i < components.length; i++) { 
+                if (components[i].id === wires[w].id) {
+                    wires[w].state = components[i].state;
+                }
+            }
+        }
+        //Update gate states for rendering purpose (Inefficent temp code)
+        for (let w = 0; w < gates.length; w++) { 
+            for (let i = 0; i < components.length; i++) { 
+                if (components[i].id === gates[w].id) {
+                    gates[w].state = components[i].state;
+                }
+            }
+        }
+    }
+
+    function switchState(id) {
+        console.log("Called");
+        let comp = getComponent(id);
+        if (comp.state)
+            comp.state = 0;
+        else
+            comp.state = 1;
+        //Rerun sim
+        simulatate();
     }
 
     function offset(el) {
@@ -187,6 +433,7 @@
         scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         return { top: rect.top + scrollTop, left: rect.left + scrollLeft }
     }
+
 </script>
 
 <style>
@@ -220,23 +467,46 @@
             <svg width="2048" height="2048">
                 {#each wires as wire, i}
                     <Wire start_x_pos={wires[i].startPos.x} start_y_pos={wires[i].startPos.y}
-                        end_x_pos={wires[i].endPos.x} end_y_pos={wires[i].endPos.y} wire={placingWire.wire}
+                        end_x_pos={wires[i].endPos.x} end_y_pos={wires[i].endPos.y} state={wires[i].state}
                     />
                 {/each}
                 {#if isWire}
                     <Wire start_x_pos={placingWire.startPos.x} start_y_pos={placingWire.startPos.y}
-                        end_x_pos={placingWire.endPos.x} end_y_pos={placingWire.endPos.y} wire={placingWire.wire}
+                        end_x_pos={placingWire.endPos.x} end_y_pos={placingWire.endPos.y} state={placingWire.state}
                     />
                 {/if}
             </svg>
         </div>
         {#each gates as gate, i}
-            <Gate x_pos={gates[i].position.x} y_pos={gates[i].position.y}
-                image={gates[i].image} gate={gates[i].gate} outputCallback={outputCallback} inputCallback={inputCallback}
-            />
+            {#if gates[i].logic_button === 1}
+                <UserInput x_pos={gates[i].position.x} y_pos={gates[i].position.y} image={gates[i].image}
+                    outputs={gates[i].outputs} id={gates[i].id} outputCallback={outputCallback} switchState={switchState}
+                />
+            {:else if gates[i].logic_button === 2}
+                <Light x_pos={gates[i].position.x} y_pos={gates[i].position.y} image={gates[i].image}
+                    outputs={gates[i].outputs} id={gates[i].id} inputCallback={inputCallback} state={gates[i].state}
+                />
+            {:else}
+                <Gate x_pos={gates[i].position.x} y_pos={gates[i].position.y}
+                    image={gates[i].image} inputs={gates[i].inputs} outputs={gates[i].outputs} id={gates[i].id}
+                    outputCallback={outputCallback} inputCallback={inputCallback}
+                />
+            {/if}
         {/each}
         {#if isPlacing}
-            <Gate x_pos={placingGate.position.x} y_pos={placingGate.position.y} image={placingGate.image} gate={placingGate.gate}/>
+            {#if isPlacing.logic_button === 1}
+                <UserInput x_pos={placingGate.position.x} y_pos={placingGate.position.y} image={placingGate.image}
+                    outputs={placingGate.outputs} id={placingGate.id} switchState={switchState}
+                />
+            {:else if placingGate.logic_button === 2}
+                <Light x_pos={placingGate.position.x} y_pos={placingGate.position.y} image={placingGate.image}
+                    outputs={placingGate.outputs} id={placingGate.id} inputCallback={inputCallback}
+                />
+            {:else}
+                <Gate x_pos={placingGate.position.x} y_pos={placingGate.position.y} image={placingGate.image}
+                    inputs={placingGate.inputs} outputs={placingGate.outputs} id={placingGate.id}
+                />
+            {/if}
         {/if}
     </div>
 </div>

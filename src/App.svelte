@@ -41,7 +41,16 @@
 	<div class="menu">
 		<button on:click={() => canvas.addGate("AND")}>AND</button>
 		<button on:click={() => canvas.addGate("NAND")}>NAND</button>
+		<button on:click={() => canvas.addGate("OR")}>OR</button>
+		<button on:click={() => canvas.addGate("NOR")}>NOR</button>
+		<button on:click={() => canvas.addGate("XOR")}>XOR</button>
+		<button on:click={() => canvas.addGate("NOT")}>NOT</button>
+		<button on:click={() => canvas.addGate("1")}>1</button>
+		<button on:click={() => canvas.addGate("0")}>0</button>
+		<button on:click={() => canvas.addGate("Logic_Button")}>Switch</button>
+		<button on:click={() => canvas.addGate("Light")}>Light</button>
 		<button on:click={() => canvas.debugGates()}>DEBUG</button>
+		<button on:click={() => canvas.simulatate()}>PLAY</button>
 	</div>
 	<div class="canvas">
 		<Canvas bind:this={canvas}/>

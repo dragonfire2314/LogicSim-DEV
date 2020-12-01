@@ -5,23 +5,25 @@
     export let start_x_pos, start_y_pos;
     export let end_x_pos, end_y_pos;
 
-    export let wire;
+    export let state;
 
     let color = "white";
 
+    
     onMount(async () => {
-        if (wire.getState()) {
+        if (state) {
             //console.log("I want to get this function to be called");
             color = "blue";
         }
         else { color = "white"; }
     });
-
-    $: if (wire.getState()) {
+    
+    $: if (state) {
         //console.log("I want to get this function to be called");
         color = "blue";
     }
     else { color = "white"; }
+    
 
 </script>
 
