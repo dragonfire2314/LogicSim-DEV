@@ -5,7 +5,7 @@
     export let x_pos = 0;
     export let y_pos = 0;
 
-    export let wire;
+    export let id;
 
     export let outputCallback;
 
@@ -30,7 +30,7 @@
     }
     function mouseDown() {
         let temp = circle_dom.parentNode.style;
-        outputCallback(x_pos + parseInt(temp.left) + 8, y_pos + parseInt(temp.top) + 8, wire);
+        outputCallback(x_pos + parseInt(temp.left) + 8, y_pos + parseInt(temp.top) + 8, id);
     }
 
 </script>
