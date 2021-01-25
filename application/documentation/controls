@@ -1,0 +1,14 @@
+left click: 
+    -Place gate
+    -Start wire
+    -End wire
+
+Right click:
+    -Move workspace around
+
+Scroll:
+    -Zoom in and out
+
+
+If left click not on inputs while connecting a wire, the wire will disapear.
+If gate selection it should work.

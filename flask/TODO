@@ -1,0 +1,19 @@
+-Render Homepage
+-Render Login
+-Render Signup
+-POST request for Signup
+-POST request for Login
+
+-POST request for saving
+-POST request for loading
+
+
+
+
+
+
+#Sign Up#
+-email
+-username
+-password
+-confirm password

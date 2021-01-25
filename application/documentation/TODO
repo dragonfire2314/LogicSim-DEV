@@ -1,0 +1,2 @@
+-Wire holds a basic number for a state, so if the width is greater than one, only the value of bit 0 will show up.
+

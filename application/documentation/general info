@@ -1,0 +1,6 @@
+The increasing and decreasing of inputs or outputs will not be valid for the time being,
+all buses will be hardcoded to 8 bits. The application is designed in such a way that any
+development after this message should not hinder adding this feature at a later date. To
+compansate for this, the system might be designed to allow the user to predetermine how many 
+in puts a gate has, doing so would allow the system to work perfectly without modification.
+
