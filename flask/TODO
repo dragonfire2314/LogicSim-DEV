@@ -17,3 +17,8 @@
 -username
 -password
 -confirm password
+
+
+scp -r tanner@192.168.1.146:home/Desktop ./server
+
+scp -r ./server tanner@192.168.1.146:/home/Desktop
