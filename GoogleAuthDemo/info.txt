@@ -1,2 +1,2 @@
-To keep file sizses down, the node_modules folder is not included in the git project. To get it run the command "npm init". Doing
+To keep file sizses down, the node_modules folder is not included in the git project. To get it run the command "npm install". Doing
 so will download the used npm packages.
