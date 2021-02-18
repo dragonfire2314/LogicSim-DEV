@@ -3,6 +3,7 @@ const app = express()
 const bcrypt = require('bcrypt')
 const mongoose = require('mongoose')
 const User = require('./models/user')
+const Lesson = require('./models/lesson')
 
 // Express stuff
 app.use(express.json())
@@ -15,7 +16,7 @@ mongoose.connect(dbConnString, { useNewUrlParser: true, useUnifiedTopology: true
 
 
 
-// mongoose and mongo sandbox routes
+// Add user info to DB
 app.get('/add-user', (req, res) => {
     const user = new User(
     {
@@ -26,6 +27,25 @@ app.get('/add-user', (req, res) => {
     });
 
     user.save()
+        .then((result) => {
+            res.send(result)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+
+})
+
+// Add lesson info to DB
+app.get('/add-lesson', (req, res) => {
+    const lesson = new Lesson(
+    {
+        accountIdentifier: 'testID',
+        lessonData: 'test lesson data',
+        lessonID: '1'
+    });
+
+    lesson.save()
         .then((result) => {
             res.send(result)
         })

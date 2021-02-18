@@ -5,18 +5,18 @@ const Schema = mongoose.Schema;
 // Create schema for lesson info
 const lessonSchema = new Schema({
     accountIdentifier: {
-        type: String
+        type: String,
         required: true
     },
     lessonData: {
         type: String
     },
-    lessonID{
-        type: string
+    lessonID: {
+        type: String
     }
 }, { timestamps: true });
 
 
 // Export lesson schema
-const Lesson = mongoose.model('Lesson', userSchema);
+const Lesson = mongoose.model('Lesson', lessonSchema);
 module.exports = Lesson;
