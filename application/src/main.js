@@ -8,17 +8,3 @@ const app = new App({
 });
 
 export default app;
-
-/*
-STRUCTURE
-	-Chapter Page
-		-Lesson Page
-	
-	-Simulator
-	-Lesson
-
-INFORMATION
-	-Pages are accesses through my own routing system
-	-This comunicates with the server via a restful API
-	-When the simulator is loaded information 
-*/

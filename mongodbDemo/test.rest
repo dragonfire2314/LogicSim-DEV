@@ -1,0 +1,13 @@
+//This file can be used to test the api, just get the restAPI extention for vscode
+
+GET http://localhost:3000
+
+###
+
+POST http://localhost:3000/createAccount
+Content-Type: application/json
+
+{
+    "email": "test@gmail.com",
+    "password": "1234"
+}
