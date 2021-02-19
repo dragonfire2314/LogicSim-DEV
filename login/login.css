@@ -58,3 +58,16 @@ input[type=submit], [type=reset]{
     
 
 }
+
+.gbutton{
+    text-align: center;
+    font-weight: 600;
+    color: white;
+    background-color: rgb(177, 6, 6);
+    padding: 4px 2px;
+    border-radius: 6px;
+    width: 325px;
+    height: 30px;
+    border: 1px solid #1C2541;
+    margin: 12px, 4px;
+}
