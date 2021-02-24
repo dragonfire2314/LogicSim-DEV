@@ -2,21 +2,21 @@ GET http://localhost:3000/add-user
 
 ###
 
-POST http://localhost:3000/createAccount
+POST http://localhost:80/api/createAccount
 Content-Type: application/json
 
 {
-    "email": "tan@gmail.com",
+    "email": "tannerkern2314@gmail.com",
     "password": "1234",
     "username": "K-man"
 }
 ###
 
-POST http://localhost:3000/login
+POST http://localhost:80/loginAccount
 Content-Type: application/json
 
 {
-    "email": "ta@gmail.com",
+    "email": "tannerkern2314@gmail.com",
     "password": "1234"
 }
 ###

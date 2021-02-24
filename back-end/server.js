@@ -8,6 +8,13 @@ const Lesson = require('./models/lesson')
 // Express stuff
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public/html'));
+app.use(express.static('public/login'));
+app.use(express.static('public/signUp'));
+app.use(express.static('public/public'));
+// app.use(express.static('public/public'));
+
+app.set('view engine', 'ejs');
 
 // MongoDB stuff
 
@@ -40,14 +47,31 @@ async function verify(token) {
     return payload;
 }
 
-//A GET handler for a blank usl (www.learnlogic.today)
+
+//www.learnlogic.today
 app.get("/", (req, res) => {
-    res.sendFile('index.html', {root: __dirname })
+    res.render('pages/index');
+});
+//www.learnlogic.today/login
+app.get("/login", (req, res) => {
+    res.render('pages/login');
+});
+//www.learnlogic.today/signUp
+app.get("/signup", (req, res) => {
+    res.render('pages/signUp');
+});
+//www.learnlogic.today/learn
+app.get("/learn", (req, res) => {
+    res.sendFile('./public/public/index.html', {root: __dirname })
+    //res.render('pages/signUp');
 });
 //Load
 //Save
 //Login
-app.post('/login', async (req, res) => {
+app.post('/loginAccount', async (req, res) => {
+
+    var userResult;
+
     try{
         //Check if the account exsists
         User.find({
@@ -58,35 +82,41 @@ app.post('/login', async (req, res) => {
             if (doc.length === 1) {
                 bcrypt.compare(req.body.password, doc[0].passwordHash).then(b_res => {
                     if (b_res) {
-                        res.send("Access Granted");
-                        res.status(200).send();
+                        userResult = "Account found. Signed In";
                     }
                     else {
-                        res.send("Account Couldn't be found");
-                        res.status(200).send();
+                        userResult = "Account not found.";
                     }
+                    //Respond to the request
+                    console.log("User res", userResult);
+                    res.render('pages/loginResult', {
+                        result: userResult,
+                    });
+                    res.status(200).send();
+                }).catch(error => {
+                    //Password doesn't esist, this is most likely due to the user having signed in with google be before
+                    userResult = "Account not found. Try using google to sign in.";
+                    //Respond to the request
+                    console.log("User res", userResult);
+                    res.render('pages/loginResult', {
+                        result: userResult,
+                    });
+                    res.status(200).send();
                 });
             }
             else {
-                res.send("Account Couldn't be found");
+                userResult = "Account not found.";
+                //Respond to the request
+                console.log("User res", userResult);
+                res.render('pages/loginResult', {
+                    result: userResult,
+                });
                 res.status(200).send();
             }
         })
         .catch(err => {
             console.error(err)
         })
-
-        // if (user == null) {
-        //     return res.status(400).send('Cannot find user'); // If username does not match records
-        // }
-        // if(await bcrypt.compare(req.body.password, user.password))
-        // {
-        //     res.send('Success'); // If username and password both match
-        // }
-        // else
-        // {
-        //     res.send('Not Allowed'); // If password is invalid
-        // }
     }
     catch{
         console.log("ERROR");
@@ -95,6 +125,8 @@ app.post('/login', async (req, res) => {
 });
 //SignUp
 app.post('/createAccount', async (req, res) => {
+    var resultForUser;
+
     try{
         //Password stuff
         const hashedPassword = await bcrypt.hash(req.body.password, 10); // Encrypt password
@@ -108,9 +140,9 @@ app.post('/createAccount', async (req, res) => {
             if (doc.length) {
                 //console.log("doc: ", doc);
                 //Replace with the responce page to send
-                res.send("Account Already Exists.");
-                res.status(201).send();
-                return;
+                // res.send("Account Already Exists.");
+                // res.status(201).send();
+                resultForUser = "Account Already Exists.";
             }
             else {
                 //Add user to database
@@ -131,9 +163,16 @@ app.post('/createAccount', async (req, res) => {
                 });
 
                 //Replace with the responce page to send
-                res.send("Account Created.");
-                res.status(201).send();
+                // res.send("Account Created.");
+                // res.status(201).send();
+                resultForUser = "Account Created.";
             }
+
+            //Respond to the request
+            res.render('pages/signUpResult', {
+                result: resultForUser,
+            });
+            res.status(201).send();
         })
         .catch(err => {
             console.error("Error with /createAccount find: ", err)
@@ -144,7 +183,7 @@ app.post('/createAccount', async (req, res) => {
     }
 });
 //Login/SignUp(Google)
-app.post('/tokenSignIn', async (req, res) => {
+app.post('/api/tokenSignIn', async (req, res) => {
     //console.log("Google End point");
     try{
         verify(req.body.idtoken).then(g_res => {
@@ -208,15 +247,6 @@ app.post('/tokenSignIn', async (req, res) => {
         res.status(500).send();
     }
 });
-
-
-
-
-
-
-
-
-
 
 
 
