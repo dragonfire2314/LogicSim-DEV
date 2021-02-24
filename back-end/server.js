@@ -12,7 +12,6 @@ app.use(express.static('public/html'));
 app.use(express.static('public/login'));
 app.use(express.static('public/signUp'));
 app.use(express.static('public/public'));
-// app.use(express.static('public/public'));
 
 app.set('view engine', 'ejs');
 
@@ -62,7 +61,7 @@ app.get("/signup", (req, res) => {
 });
 //www.learnlogic.today/learn
 app.get("/learn", (req, res) => {
-    res.sendFile('./public/public/index.html', {root: __dirname })
+    res.sendFile('./public/public/index2.html', {root: __dirname })
     //res.render('pages/signUp');
 });
 //Load
