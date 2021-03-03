@@ -1,0 +1,101 @@
+/*copied from frontPage.js*/
+
+body {
+    background-color: #6FFFE9;
+    margin: 0;
+}
+
+.main {
+    padding: 16px;
+    margin-top: 30px;
+    height: 1500px; /* Used in this example to enable scrolling */
+}
+
+.container {
+    display: flex; /* or inline-flex */
+    justify-content: center;
+    align-items: center;
+    
+    
+    max-width: 1200px;
+    margin: auto;
+    
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.containerSpan {
+    position: sticky; 
+    top: 0; 
+    width: 100%; 
+    background-color: white;
+    
+    border-bottom: 1px solid;
+    border-bottom-color: lightgrey;
+}
+
+.flexLogo {
+    flex-grow: 4;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.flexCenter {
+    flex-grow: 1;
+    justify-content: center;
+    display: flex;
+}
+
+.flexAccount {
+    flex-grow: 4;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.logoContainer {
+/*    background-color: forestgreen;*/
+    height: 50px;
+    width: 25%;
+}
+
+.logo {
+    height: 50px;
+/*    background-color: brown;*/
+/*    flex-grow: 2;*/
+}
+
+.content {
+    flex-grow: 1;
+    color: #000;
+    text-decoration: none;
+    font-size: 16px;
+    font-family: Verdana, sans-serif;
+    text-align: center;
+    padding: 14px 16px;
+    
+/*    background-color: brown;*/
+/*    flex-grow: 1;*/
+}
+
+.login {
+    color: #000;
+    text-decoration: none;
+    font-size: 16px;
+    font-family: Verdana, sans-serif;
+    text-align: center;
+    padding: 14px 16px;
+}
+
+.signUp {
+    color: #FFF;
+    text-decoration: none;
+    font-size: 16px;
+    font-family: Verdana, sans-serif;
+    text-align: center;
+    padding: 14px 16px;
+    
+    background-color: #1C2541;
+    border-radius: 5px;
+}
