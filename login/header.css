@@ -1,15 +1,5 @@
 /*copied from frontPage.js*/
 
-body {
-    background-color: #6FFFE9;
-    margin: 0;
-}
-
-.main {
-    padding: 16px;
-    margin-top: 30px;
-    height: 1500px; /* Used in this example to enable scrolling */
-}
 
 .container {
     display: flex; /* or inline-flex */

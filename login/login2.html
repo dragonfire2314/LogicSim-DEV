@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Login</title>
+    
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <meta name="google-signin-client_id" content="477838951887-1nrm34upa2qohl2ajkt4oppcn6tumsnp.apps.googleusercontent.com">
+
+    <script>
+        function onSignIn(googleUser) {
+            console.log("Test");
+            var profile = googleUser.getBasicProfile();
+            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+            console.log('Name: ' + profile.getName());
+            console.log('Image URL: ' + profile.getImageUrl());
+            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+
+            var id_token = googleUser.getAuthResponse().id_token;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://www.learnlogic.today/tokenSignIn');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function() {
+                console.log('Signed in as: ' + xhr.responseText);
+            };
+            xhr.send('idtoken=' + id_token);
+        }
+    </script>
+
+    <link rel="stylesheet" type="text/css" href="login2.css">
+    <link rel="stylesheet" type="text/css" href="header.css">
+</head>
+
+
+<body>
+    <div class="containerSpan">
+        <div class="container">
+            <div class="flexLogo">
+                <a class="logoContainer" href="frontPage.html">
+                    <img class="logo" src="Electronic_Circuit.png">
+                </a>
+            </div>
+            <div class="flexCenter">
+                <a class="content" href="#home">Explore</a>
+                <a class="content" href="#news">Learn</a>
+                <a class="content" href="#contact">Support</a>
+            </div>
+            <div class="flexAccount">
+                <a class="login" href="#login">Login</a>
+                <button class="signUp" href="#signup">Sign Up</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="wrapper">
+        
+        <div class="nested"> 
+            
+            <div class="boxBackground">
+                <div class="form">
+                    <h2 class="textLogin">LOGIN</h2> 
+            
+                    <form method="post" action="#" id="login">
+            
+                     <p class="elt">
+                        <input type="text" name="email" placeholder="Email" form="login">
+                    </p>
+                <!--
+                    <p class="elt">
+                        <input type="text" name="userName" placeholder="Username" form="login">
+                    </p>
+                -->
+                    <p class="elt">
+                        <input type="password" name="password" placeholder="Password" form="login">
+                        
+                    </p>
+            
+            
+                    <p class="elt">
+                        <input type="submit" name="submit" value="Submit" form="login">
+                        <!--<input type="reset" name="reset" value="Clear Form" form="login"> -->
+                    </p>
+                    <p class="elt">
+                        <!--<div class="g-signin2" data-onsuccess="onSignIn"></div>-->
+                        <div class="gbutton">
+                            <div class="g-signin2" data-width="315" data-height="30" data-longtitle="true"></div>
+                        </div>
+                    </p>
+            
+                    </form>
+                </div>
+
+            </div>
+            
+            
+        </div>
+
+        <div> 
+            FOOTER - Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non, blanditiis!
+            
+        </div>
+    </div>
+</body>
+
+</html>
