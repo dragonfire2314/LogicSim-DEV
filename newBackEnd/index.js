@@ -32,8 +32,8 @@ app.set('view engine', 'ejs');
 app.use(session);
 
 //Setup cors
-// app.options('*', corsMw);
-// app.use(corsMw);
+app.options('*', corsMw);
+app.use(corsMw);
 
 //Passport
 app.use(passport.initialize());

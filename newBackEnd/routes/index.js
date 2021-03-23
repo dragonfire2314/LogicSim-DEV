@@ -45,7 +45,12 @@ router.post('/createAccount', authController.createAccount);
 router.get('/google/callback', passport.authenticate('google', {failureRedirect: '/loginFailed'}), authController.googleAuthPassport);
 
 //App User page
-app.get('/app', appController.accessProtectionMiddleware, appController.app);
+router.get('/app', appController.accessProtectionMiddleware, appController.app);
+
+router.get('/userInfo', appController.getUserData);
+
+//Save and load logic sim
+router.get('/api/load', appController.loadUserLessonData);
 
 //User must be logged in to access this
 router.get('/profile', profileController.profile);

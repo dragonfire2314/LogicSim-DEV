@@ -1,6 +1,6 @@
 const cors = require('cors');
 
-var whitelist = new Set(['http://learnlogic.today', 'http://localhost:7777']);
+var whitelist = new Set(['http://learnlogic.today', 'http://localhost:8080', 'http://localhost:5000', 'http://localhost:5000/profile']);
 
 const corsOptions = {
     optionsSuccessStatus: 200,

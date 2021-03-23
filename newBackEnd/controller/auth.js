@@ -83,7 +83,10 @@ async function createAccount (req, res) {
                     username: req.body.username,
                     email: req.body.email,
                     passwordHash: hashedPassword,
-                    uuid: uuidv4()
+                    uuid: uuidv4(),
+                    lessonCompleted: [{
+                        lessonID: 0,
+                    }],
                 });
             
                 user.save()

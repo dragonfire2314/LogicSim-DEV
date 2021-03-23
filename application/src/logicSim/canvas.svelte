@@ -136,6 +136,13 @@
     let selectionBegin;
     let selectionEnd;
 
+    export let externalData;
+
+    onMount(async () => {
+        //Load the users data for this lesson
+        console.log("externalData: ", externalData)
+        load(externalData);
+    });
 
     //TODO - move without place the gate held
     function mouseDown(event) {
@@ -877,7 +884,7 @@
         wires = wires;
     }
 
-    export function load() {
+    export function load(lessonID) {
         fetch("http://localhost:8080/api/load", {
             headers: {
                 "content-type":"application/json"
@@ -953,7 +960,8 @@
         background-color: #d6d6d6;
     }
     #zoomLayer {
-        background-image: url(./grid.png);
+        /* background-image: url(./grid_dark.png); */
+        background-color: #1F2933;
         width: 2048px;
         height: 2048px;
     }

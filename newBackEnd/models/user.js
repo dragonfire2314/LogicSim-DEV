@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const lessonCompletion = new Schema({ 
+    lessonID: Number
+});
 
 // Create schema for user info
 const userSchema = new Schema({
@@ -17,7 +20,7 @@ const userSchema = new Schema({
         //required: true
     },
     lessonCompleted: {
-        type: Array
+        type: [lessonCompletion]
     },
     username: {
         type: String,
