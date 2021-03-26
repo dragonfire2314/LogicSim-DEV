@@ -1,8 +1,12 @@
 
+body {
+    margin: 0;
+}
+
 .wrapper {
     display:grid;
     grid-template-columns: auto;
-    grid-template-rows: 475px 75px;
+    grid-template-rows: 532px; /* 475 75 px*/
     grid-gap: 1em;
     
 }
@@ -77,3 +81,4 @@ input[type=submit]:hover{
 .gbutton {
     margin: 10px 5px 5px 45px;
 }
+
