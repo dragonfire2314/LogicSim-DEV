@@ -3,7 +3,7 @@
 <html>
 
 <head>
-    <title>Login</title>
+    <title>Sign Up</title>
     
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
@@ -30,7 +30,7 @@
         }
     </script>
 
-    <link rel="stylesheet" type="text/css" href="login2.css">
+    <link rel="stylesheet" type="text/css" href="signUp2.css">
     <link rel="stylesheet" type="text/css" href="header.css">
     <link rel="stylesheet" type="text/css" href="footer.css">
 </head>
@@ -62,26 +62,30 @@
             
             <div class="boxBackground">
                 <div class="form">
-                    <h2 class="textLogin">LOGIN</h2> 
+                    <h2 class="textSignup">SIGN UP</h2> 
             
-                    <form method="post" action="#" id="login">
+                    <form method="post" action="#" id="signUp">
             
-                     <p class="elt">
-                        <input type="text" name="email" placeholder="Email" form="login">
-                    </p>
-                <!--
+                        <p class="elt">
+                            <input type="text" name="email" placeholder="Email" form="signUp">
+                        </p>
+                
+                        <p class="elt">
+                            <input type="text" name="userName" placeholder="Username" form="signUp">
+                        </p>
+                
+                        <p class="elt">
+                            <input type="password" name="password" placeholder="Password" form="signUp">
+                            
+                        </p>
+                
+                        <p class="elt">
+                            <input type="password-confirm" name="password-confirm" placeholder="Confirm Password" form="signUp">
+                        </p>
+            
+            
                     <p class="elt">
-                        <input type="text" name="userName" placeholder="Username" form="login">
-                    </p>
-                -->
-                    <p class="elt">
-                        <input type="password" name="password" placeholder="Password" form="login">
-                        
-                    </p>
-            
-            
-                    <p class="elt">
-                        <input type="submit" name="submit" value="Submit" form="login">
+                        <input type="submit" name="submit" value="Submit" form="signUp">
                     </p>
                     
                     <p class="elt">
