@@ -11,9 +11,11 @@ body {
 }
 
 .wrapper > div {
+    /*
     border-style: solid;
     border-color: black;
     border-width: 1px;
+    */
     padding: 1em;
     
 }
@@ -24,7 +26,7 @@ body {
 }
 
 .inner2 {
-    height: 400px;
+    min-height: 400px;
     width: 97%;
     font-family: Verdana, sans-serif;
     margin: auto;
@@ -39,6 +41,7 @@ body {
 .maintext {
     text-align: center;
     font-size: larger;
+    padding-bottom: 5px;
 }
 
 
@@ -49,10 +52,12 @@ body {
     color: black;
     font-size: medium;
     text-align: justify;
-    border: 1px solid rgb(4, 0, 255);
+    /*border: 1px solid rgb(4, 0, 255);*/
     justify-content: space-between;
 
     margin: 15px 40px;
+    padding: 5px;
+    column-gap: 20px;
     
     
 
@@ -64,23 +69,26 @@ body {
     background-color: white;
     font-family: Verdana, sans-serif;
     width: 100px;
-    padding: 10px 30px;
-    border: 1px solid red;
+    padding: 10px 35px;
+    /*border: 1px solid red;*/
 
-    height: 280px;
-    
+    min-height: 280px;
+    background-color: #F5F7FA;
+    color: #1F2933;
     
 }
+
 
 .info2 {
     flex:1;
     background-color: white;
     font-family: Verdana, sans-serif;
 
-    padding: 10px 30px;
-    border: 1px solid red;
+    padding: 10px 35px;
+    /*border: 1px solid red;*/
 
-    
+    color: #1F2933;
+    background-color:#F5F7FA;
 
     
 }
@@ -90,9 +98,45 @@ body {
     background-color: white;
     font-family: Verdana, sans-serif;
     
-    padding: 10px 30px;
-    border: 1px solid red;
+    padding: 10px 35px;
+    /*border: 1px solid red;*/
 
+    color: #1F2933;
+    background-color: #F5F7FA;
     
     
+}
+
+/*images from freepik.com; searched (resources, free, icons): ciruit*/
+.pic1 {
+    height: 100px;
+    width: 100px;
+    align-self: center;
+    padding-left:120px;
+    padding-bottom: 10px;
+}
+
+
+.pic2 {
+    height: 60px;
+    width: 100px;
+    align-self: center;
+    padding-left:90px;
+    padding-bottom:15px;
+}
+
+.pic2_1 {
+    height: 60px;
+    width: 100px;
+    align-self: center;
+    padding-left:90px;
+    padding-top:30px;
+}
+
+.pic3 {
+    height: 100px;
+    width: 100px;
+    align-self: center;
+    padding-left:120px;
+    padding-top: 68px;
 }
