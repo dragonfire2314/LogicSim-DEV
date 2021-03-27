@@ -109,34 +109,34 @@ body {
 
 /*images from freepik.com; searched (resources, free, icons): ciruit*/
 .pic1 {
-    height: 100px;
-    width: 100px;
+    height: auto;
+    max-width: 30%;
     align-self: center;
-    padding-left:120px;
+    padding-left: 35%;
     padding-bottom: 10px;
 }
 
 
 .pic2 {
-    height: 60px;
-    width: 100px;
+    height: auto;
+    max-width: 27%;
     align-self: center;
-    padding-left:90px;
+    padding-left:35%;
     padding-bottom:15px;
 }
 
 .pic2_1 {
-    height: 60px;
-    width: 100px;
+    height: auto;
+    max-width: 27%;
     align-self: center;
-    padding-left:90px;
+    padding-left:35%;
     padding-top:30px;
 }
 
 .pic3 {
-    height: 100px;
-    width: 100px;
+    height: auto;
+    width: 30%;
     align-self: center;
-    padding-left:120px;
+    padding-left:37%;
     padding-top: 68px;
 }
