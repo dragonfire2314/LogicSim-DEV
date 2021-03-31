@@ -136,6 +136,13 @@
     let selectionBegin;
     let selectionEnd;
 
+    export let externalData;
+
+    onMount(async () => {
+        //Load the users data for this lesson
+        console.log("externalData: ", externalData)
+        load(externalData);
+    });
 
     //TODO - move without place the gate held
     function mouseDown(event) {
@@ -797,7 +804,11 @@
         "light": "./build/Light.svg",
     };
 
-    function generateComponentsData(data) {
+    function generateComponentsData(fullData) {
+        //Sort the options
+        var data = fullData.comps;
+        nextGateID = fullData.nextGateID;
+
         //Clear the components array
         components = [];
 
@@ -871,25 +882,29 @@
             }
         }
 
+        console.log("Component Array Built: ", components);
 
         //Tell svelte to update stuff
         components = components;
         wires = wires;
     }
 
-    export function load() {
+    export function load(lessonID) {
         fetch("http://localhost:8080/api/load", {
             headers: {
                 "content-type":"application/json"
             },
             method: "POST", 
-            body: JSON.stringify(components)
+            body: JSON.stringify({
+                lessonID: externalData,
+            })
         }).then(res => {
             return res.json();
         }).then(res => {
             console.log("Request complete! response:", res)
             //Load the information into the components array
-            generateComponentsData(res);
+            generateComponentsData(res.data);
+        }).catch(error => {
         });
     }
 
@@ -911,14 +926,22 @@
             sendData = [...sendData, entry];
         }
 
+        var sendDataWithOptions = {
+            comps: sendData,
+            nextGateID: nextGateID,
+        }
+
+        console.log("Sending data: ", sendDataWithOptions);
+
         fetch("http://localhost:8080/api/save", {
             headers: {
                 "content-type":"application/json"
             },
             method: "POST", 
-            body: JSON.stringify(sendData)
-        }).then(res => {
-            return res.json();
+            body: JSON.stringify({
+                lessonID: externalData,
+                lessonData: sendDataWithOptions,
+            })
         }).then(res => {
             console.log("Request complete! response:", res)
         });
@@ -953,7 +976,8 @@
         background-color: #d6d6d6;
     }
     #zoomLayer {
-        background-image: url(./grid.png);
+        /* background-image: url(./grid_dark.png); */
+        background-color: #1F2933;
         width: 2048px;
         height: 2048px;
     }

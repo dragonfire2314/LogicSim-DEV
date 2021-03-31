@@ -1,0 +1,33 @@
+<!-- 
+    Olukemi Olaewe
+    SignUp front end
+    1/31/2021
+-->
+
+<!-- header section -->
+<div class="containerSpan">
+    <div class="container">
+        <div class="flexLogo">
+            <a class="logoContainer" href="/">
+                <img class="logo" src="Electronic_Circuit.png">
+            </a>
+        </div>
+        <div class="flexCenter">
+            <a class="content" href="#home">Explore</a>
+            <a class="content" href="learn">Learn</a>
+            <a class="content" href="#contact">Support</a>
+        </div>
+        <% if(isLoggedIn){ %>
+            <div class="flexAccount">
+               <p>You are logged in!</p>
+               <a class="signUp" href="logout">Logout</a>
+               <!-- Display account info here -->
+            </div>
+        <% } else { %>
+            <div class="flexAccount">
+                <a class="login" href="login">Login</a>
+                <a class="signUp" href="signup">Sign Up</a>
+            </div>
+        <% } %>
+    </div>
+</div>
