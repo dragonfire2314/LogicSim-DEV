@@ -1,0 +1,142 @@
+
+body {
+    margin: 0;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto; /* 475 75 px*/
+    grid-gap: 1em;
+}
+
+.wrapper > div {
+    /*
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+    */
+    padding: 1em;
+    
+}
+
+.inner1 {
+    height: 50px;
+    background-image: url(clip1.jpeg);
+}
+
+.inner2 {
+    min-height: 400px;
+    width: 97%;
+    font-family: Verdana, sans-serif;
+    margin: auto;
+
+}
+
+.inner3 {
+    height: 50px;
+    background-image: url(clip3.jpeg);
+}
+
+.maintext {
+    text-align: center;
+    font-size: larger;
+    padding-bottom: 5px;
+}
+
+
+
+.containerAbout {
+    display: flex;
+    font-family: Verdana, sans-serif;
+    color: black;
+    font-size: medium;
+    text-align: justify;
+    /*border: 1px solid rgb(4, 0, 255);*/
+    justify-content: space-between;
+
+    margin: 15px 40px;
+    padding: 5px;
+    column-gap: 20px;
+    
+    
+
+}
+
+.info {
+    flex:1;
+    flex-basis: 50px;
+    background-color: white;
+    font-family: Verdana, sans-serif;
+    width: 100px;
+    padding: 10px 35px;
+    /*border: 1px solid red;*/
+
+    min-height: 280px;
+    background-color: #F5F7FA;
+    color: #1F2933;
+    
+}
+
+
+.info2 {
+    flex:1;
+    background-color: white;
+    font-family: Verdana, sans-serif;
+
+    padding: 10px 35px;
+    /*border: 1px solid red;*/
+
+    color: #1F2933;
+    background-color:#F5F7FA;
+
+    
+}
+
+.info3 {
+    flex:1;
+    background-color: white;
+    font-family: Verdana, sans-serif;
+    
+    padding: 10px 35px;
+    /*border: 1px solid red;*/
+
+    color: #1F2933;
+    background-color: #F5F7FA;
+    
+    
+}
+
+/*images from freepik.com; searched (resources, free, icons): ciruit*/
+.pic1 {
+    height: auto;
+    max-width: 30%;
+    align-self: center;
+    padding-left: 35%;
+    padding-bottom: 10px;
+}
+
+
+.pic2 {
+    height: auto;
+    max-width: 27%;
+    align-self: center;
+    padding-left:35%;
+    padding-bottom:15px;
+}
+
+.pic2_1 {
+    height: auto;
+    max-width: 27%;
+    align-self: center;
+    padding-left:35%;
+    padding-top:30px;
+}
+
+.pic3 {
+    height: auto;
+    width: 30%;
+    align-self: center;
+    padding-left:37%;
+    padding-top: 68px;
+}

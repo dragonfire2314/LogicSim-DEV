@@ -1,0 +1,92 @@
+
+body {
+    margin: 0;
+}
+
+html { 
+    background: url(bg4.jpeg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+
+.wrapper {
+    display:grid;
+    grid-template-columns: auto;
+    grid-template-rows: 532px; /* 475 75 px*/
+    grid-gap: 1em;
+    
+}
+
+.wrapper > div {
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+    padding: 1em;
+    
+    /*background-image: url('bg4.jpeg');*/
+    
+}
+
+
+
+.boxBackground {
+    background-color: white;
+}
+
+
+
+.nested > div {
+    width: 420px;
+    height: 300px;
+    border: 2px solid #1F2933;
+    padding: 1em;
+    margin: 40px auto auto;
+    border-radius: 3px;
+    
+    
+}
+
+
+input {
+    font-family: Verdana, sans-serif;
+    padding: 10px 5px;
+    margin: 10px 5px 5px 45px;
+    border: 2px solid gray;
+    border-radius: 2px;
+    width: 300px;
+}
+
+input[type=submit], [type=reset]{
+    text-align: center;
+    font-weight: 500;
+    color: whitesmoke;
+    background-color: #009688;
+    padding: 4px 2px;
+    border-radius: 2px;
+    width: 315px;
+    height: 30px;
+    border: none;
+    margin: 12px, 5px;
+    box-shadow: 1px 2px 3px gray;
+
+}
+
+
+.textLogin {
+    font-family: Verdana, sans-serif;
+    margin: 10px 5px 5px 165px;
+    color: #1F2933;
+}
+
+input[type=submit]:hover{
+   
+    box-shadow: 3px 3px 3px #1F2933, -2px -2px 3px #1F2933;
+    
+}
+
+.gbutton {
+    margin: 10px 5px 5px 45px;
+}
+

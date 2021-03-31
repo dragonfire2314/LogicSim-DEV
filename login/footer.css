@@ -1,0 +1,27 @@
+
+.containerFooter {
+    display: flex;
+    font-family: Verdana, sans-serif;
+    color: black;
+    font-size: small;
+    text-align: center;
+    
+
+}
+
+.box1 {
+    flex:1;
+    background-color: white;
+    font-family: Verdana, sans-serif;
+    width: 100%;
+    max-width: 1310px;
+    padding: 10px 30px;
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    
+    
+    
+    border-top: 1px solid;
+    border-top-color: lightgrey;
+}
