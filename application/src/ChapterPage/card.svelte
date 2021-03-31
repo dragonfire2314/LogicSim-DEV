@@ -43,16 +43,14 @@
 
     img {
         border-radius: 5px 5px 0 0;
+        width: 65%;
+        padding-left: 17.5%;
     }
 
     .container {
         padding: 2px 16px;
         display: flex;
         flex-direction: column;
-    }
-
-    .check {
-        width: 100%;
     }
 
     h4 {
@@ -75,12 +73,11 @@
             {#if checkForLesson(cardInfo.lessonID)}
                 <!-- <img class="check" src="build/star.svg" alt="check"> -->
                 <img class="check" src="build/green_check.svg" alt="check">
-                <p>Completed</p>
+                <!-- <p>Completed</p> -->
             {:else}
-                <img class="no_check" src="build/red_x.svg" alt="check">
-                <p>Incomplete</p>
+                <img class="no_check" src="build/red_x.svg" alt="no_check">
+                <!-- <p>Incomplete</p> -->
             {/if}
-            
         </div>
     </div>
 </div>

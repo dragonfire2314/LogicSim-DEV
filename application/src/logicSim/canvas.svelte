@@ -804,7 +804,11 @@
         "light": "./build/Light.svg",
     };
 
-    function generateComponentsData(data) {
+    function generateComponentsData(fullData) {
+        //Sort the options
+        var data = fullData.comps;
+        nextGateID = fullData.nextGateID;
+
         //Clear the components array
         components = [];
 
@@ -878,6 +882,7 @@
             }
         }
 
+        console.log("Component Array Built: ", components);
 
         //Tell svelte to update stuff
         components = components;
@@ -890,13 +895,16 @@
                 "content-type":"application/json"
             },
             method: "POST", 
-            body: JSON.stringify(components)
+            body: JSON.stringify({
+                lessonID: externalData,
+            })
         }).then(res => {
             return res.json();
         }).then(res => {
             console.log("Request complete! response:", res)
             //Load the information into the components array
-            generateComponentsData(res);
+            generateComponentsData(res.data);
+        }).catch(error => {
         });
     }
 
@@ -918,14 +926,22 @@
             sendData = [...sendData, entry];
         }
 
+        var sendDataWithOptions = {
+            comps: sendData,
+            nextGateID: nextGateID,
+        }
+
+        console.log("Sending data: ", sendDataWithOptions);
+
         fetch("http://localhost:8080/api/save", {
             headers: {
                 "content-type":"application/json"
             },
             method: "POST", 
-            body: JSON.stringify(sendData)
-        }).then(res => {
-            return res.json();
+            body: JSON.stringify({
+                lessonID: externalData,
+                lessonData: sendDataWithOptions,
+            })
         }).then(res => {
             console.log("Request complete! response:", res)
         });

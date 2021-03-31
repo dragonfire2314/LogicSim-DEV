@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 // Create schema for lesson info
 const lessonSchema = new Schema({
-    userID: {
+    uuid: {
         type: String,
         required: true
     },

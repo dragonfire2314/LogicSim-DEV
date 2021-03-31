@@ -14,6 +14,12 @@
 	function handleClick() {
 		alert("pressed");
 	}
+
+	function returnToLessonSelect() {
+		//Save the lesson
+		//Return to lesson select
+		applicationState(0, 0);
+	}
 </script>
 
 <style>
@@ -65,6 +71,9 @@
 
 <div class="main">
 	<div class="menu">
+		<button on:click={() => returnToLessonSelect()}>
+			<h2>Back</h2>
+		</button>
 		<button on:click={() => canvas.addGate("AND")}>
 			<!-- <img src="build/andGateMenu.svg" alt="AND"> -->
 			<h2>AND</h2>
@@ -94,8 +103,16 @@
 		<button on:click={() => canvas.addGate("Switch")}>
 			<h2>SWITCH</h2>
 		</button>
-		<button on:click={() => canvas.addGate("Light")}>
+		<button on:click={() => canvas.addGate("Save")}>
 			<h2>LIGHT</h2>
+		</button>
+
+
+		<button on:click={() => canvas.load()}>
+			<h2>LOAD</h2>
+		</button>
+		<button on:click={() => canvas.save()}>
+			<h2>SAVE</h2>
 		</button>
 		<!-- <button on:click={() => canvas.addGate("dLatch")}>
 			<h2>D-LATCH</h2>

@@ -7,10 +7,9 @@ const authController = require('../controller/auth');
 const profileController = require('../controller/profile');
 const pageController = require('../controller/page');
 const appController = require('../controller/app');
+const appHandler = require('../public/svelteHandler');
 
 const router = express.Router();
-
-//Can asccess without loggin in
 
 //www.learnlogic.today
 router.get("/", (req, res) => {
@@ -34,10 +33,10 @@ router.get("/logout", (req, res) => {
     res.redirect('/');
 });
 //www.learnlogic.today/learn
-router.get("/learn", (req, res) => {
-    res.sendFile(path.resolve('/public/public/index2.html'), {root: __dirname+'/../' })
+router.get("/learn", pageController.auth, (req, res) => {
+    // res.sendFile(path.resolve('/public/public/index2.html'), {root: __dirname+'/../' }) For linux I tjhink
+    appHandler.sendApp(res);
 });
-
 
 //Account Stuff
 router.post('/loginAccount', passport.authenticate('local', {successRedirect: '/', failureRedirect: '/loginFailed'}));
@@ -47,13 +46,13 @@ router.get('/google/callback', passport.authenticate('google', {failureRedirect:
 //App User page
 router.get('/app', appController.accessProtectionMiddleware, appController.app);
 
-router.get('/userInfo', appController.getUserData);
-
 //Save and load logic sim
-router.get('/api/load', appController.loadUserLessonData);
+router.post('/api/load', appController.loadUserLessonData);
+router.post('/api/save', appController.saveUserLessonData);
 
 //User must be logged in to access this
-router.get('/profile', profileController.profile);
+router.get('/profile', /* pageController.auth, */ profileController.profile);
+router.get('/userInfo', /* pageController.auth, */ appController.getUserData);
 
 //Export the router for the main file
 module.exports = router;
