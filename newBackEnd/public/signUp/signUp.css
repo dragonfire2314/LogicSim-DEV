@@ -1,44 +1,58 @@
-/*
-container classes to match header bar on front page
-*/
 
-.form {
-    display: flex;
-    flex-direction: column;
-
-    align-items: center;
-    align-content: center;
-
-    margin-top:30px;
-    margin-bottom: auto;
-    margin-left: auto;
-    margin-right: auto;
-    /*could do: margin: auto for box to not have space on top*/
-
-    width: 55%;
-    height: 650px; /*may not include after form elts added*/
-
-    padding-top: 30px;
-    padding-left: 30px;
-    padding-right: 30px;
-
-    background-color: #1C2541;
-    border: 2px solid gray;
-    border-radius: 5px;
-
+body {
+    margin: 0;
 }
 
-.form .elt {
-    color: white;
-    font-family: Verdana, sans-serif;
-    
-    
+html { 
+    background: url(bg4.jpeg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
 
+.wrapper {
+    display:grid;
+    grid-template-columns: auto;
+    grid-template-rows: 600px; /* 475 75 px*/
+    grid-gap: 1em;
+    
 }
+
+.wrapper > div {
+    border-style: solid;
+    border-color: black;
+    border-width: 0px;
+    padding: 1em;
+    
+    /*background-image: url('bg4.jpeg');*/
+    
+}
+
+
+
+.boxBackground {
+    background-color: white;
+}
+
+
+
+.nested > div {
+    width: 420px;
+    height: 450px;
+    border: 2px solid #1F2933;
+    padding: 1em;
+    margin: 40px auto auto;
+    border-radius: 3px;
+    
+    
+}
+
 
 input {
+    font-family: Verdana, sans-serif;
     padding: 10px 5px;
-    margin: 10px 5px;
+    margin: 10px 5px 5px 45px;
     border: 2px solid gray;
     border-radius: 2px;
     width: 300px;
@@ -46,28 +60,63 @@ input {
 
 input[type=submit], [type=reset]{
     text-align: center;
-    font-weight: 600;
-    color: black;
-    background-color: rgb(233, 233, 233);
+    font-weight: 500;
+    color: whitesmoke;
+    background-color: #009688;
     padding: 4px 2px;
-    border-radius: 6px;
+    border-radius: 2px;
     width: 315px;
     height: 30px;
     border: none;
     margin: 12px, 5px;
-    
+    box-shadow: 1px 2px 3px gray;
 
 }
 
-.gbutton{
+
+.textSignup {
+    font-family: Verdana, sans-serif;
+    margin: 10px 5px 5px 152px;
+    color: #1F2933;
+}
+
+input[type=submit]:hover{
+   
+    box-shadow: 3px 3px 3px #1F2933, -2px -2px 3px #1F2933;
+    
+}
+
+.gbutton {
+    margin: 10px 5px 5px 45px;
+}
+
+
+.googleButton:hover{
+   
+    box-shadow: 3px 3px 3px #1F2933, -2px -2px 3px #1F2933;
+    
+}
+
+.googleButton {
+    font-family: Verdana, sans-serif;
+    padding: 10px 5px;
+    margin: 10px 5px 5px 45px;
+    border: 2px solid gray;
+    border-radius: 2px;
+    width: 300px;
+}
+
+.googleButton {
     text-align: center;
-    font-weight: 600;
-    color: white;
-    background-color: rgb(177, 6, 6);
+    font-weight: 500;
+    color: whitesmoke;
+    background-color: #009688;
     padding: 4px 2px;
-    border-radius: 6px;
-    width: 325px;
+    border-radius: 2px;
+    width: 315px;
     height: 30px;
-    border: 1px solid #1C2541;
-    margin: 12px, 4px;
+    border: none;
+    margin: 12px, 5px;
+    box-shadow: 1px 2px 3px gray;
+
 }

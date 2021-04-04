@@ -12,37 +12,53 @@
 <%- include('../partials/header'); %>
 
 <!-- main section -->
-<div class="form">
-    <h2 class="elt">Sign Up</h2> 
+<div class="wrapper">
+    
+    <div class="nested"> 
+        
+        <div class="boxBackground">
+            <div class="form">
+                <h2 class="textSignup">SIGN UP</h2> 
+        
+                <form method="post" action="/createAccount" id="signUp">
+        
+                    <p class="elt">
+                        <input type="text" name="email" placeholder="Email" form="signUp">
+                    </p>
+            
+                    <p class="elt">
+                        <input type="text" name="username" placeholder="Username" form="signUp">
+                    </p>
+            
+                    <p class="elt">
+                        <input type="password" name="password" placeholder="Password" form="signUp">
+                        
+                    </p>
+            
+                    <p class="elt">
+                        <input type="password" name="confirmPass" placeholder="Confirm Password" form="signUp">
+                    </p>
+        
+        
+                <p class="elt">
+                    <input type="submit" name="submit" value="Submit" form="signUp">
+                </p>
+                
+                <p class="elt">
+                    <!--<div class="g-signin2" data-onsuccess="onSignIn"></div>-->
+                    <div class="gbutton">
+                        <!-- <div class="g-signin2" data-width="315" data-height="30" data-longtitle="true"></div> -->
+                        <a class="googleButton" href="/google/callback">Log In With Google</a>
+                    </div>
+                </p>
+        
+                </form>
+            </div>
 
-    <form method="post" action="/createAccount" id="signUp">
+        </div>      
+        
+    </div>
 
-     <p class="elt">
-        <input type="text" name="email" placeholder="Email" form="signUp">
-    </p>
-
-    <p class="elt">
-        <input type="text" name="username" placeholder="Username" form="signUp">
-    </p>
-
-    <p class="elt">
-        <input type="password" name="password" placeholder="Password" form="signUp">
-    </p>
-
-    <p class="elt">
-        <input type="password" name="confirmPass" placeholder="Confirm Password" form="signUp">
-    </p>
-
-    <p class="elt">
-        <input type="submit" name="submit" value="Submit" form="signUp">
-        <!--<input type="reset" name="reset" value="Clear Form" form="signUp"> -->
-    </p>
-
-    <p class="elt">
-        <!-- <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
-        <a style="padding: 10px; background-color: white; color: black;"href="/google/callback">Log In With Google</a>
-    </p>
-    </form>
 </div>
 
 <!-- Footer -->
