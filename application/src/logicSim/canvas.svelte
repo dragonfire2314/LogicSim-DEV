@@ -79,7 +79,8 @@
                                         //As per the spec these are suggested values that could appear in this array
             isHighlighted: false,
 
-        },                     
+        },
+        removable: true,                  
     }
     */
     let components = [
@@ -136,7 +137,14 @@
     let selectionBegin;
     let selectionEnd;
 
+    let displayTestResults;
+    let finalTestResults;
+    let finalTestResultsPasses;
+
+    let islessonComplete = false;
+
     export let externalData;
+    export let applicationState;
 
     onMount(async () => {
         //Load the users data for this lesson
@@ -351,6 +359,7 @@
             style: {
                 isHighlighted: false,
             },
+            removable: true,
         }
         //Sets the gate speccific data for gate type requested, some of the preset data may be changed
         switch (gateType) {
@@ -490,7 +499,9 @@
         };
 
         for (var i = 0; i < selectedGatesIds.length; i++) {
-            remove1Gate(selectedGatesIds[i]);
+            //Check if the gate can be removed
+            if (getComponent(selectedGatesIds[i]).removable)
+                remove1Gate(selectedGatesIds[i]);
         }
 
         selectedGatesIds = [];
@@ -829,7 +840,8 @@
                 image: typeToImg[data[i].type],
                 style: {
                     isHighlighted: false
-                }
+                },
+                removable: data[i].isMov,
             };
             for (var k = 0; k < data[i].ou_w.length; k++)
                 newComponent.output_states.push(0);
@@ -904,8 +916,11 @@
             console.log("Request complete! response:", res)
             //Load the information into the components array
             generateComponentsData(res.data);
-        }).catch(error => {
-        });
+        })
+        // .catch(error => {
+        //     alert("Network Error, returning to main site");
+        //     window.location.replace("https://learnlogic.today");
+        // });
     }
 
     export function save() {
@@ -921,6 +936,7 @@
                 'type' : components[i].type,
                 'in'   : components[i].inputs,
                 'pos'  : components[i].position,
+                'isMov': components[i].removable,
             };
 
             sendData = [...sendData, entry];
@@ -933,6 +949,8 @@
 
         console.log("Sending data: ", sendDataWithOptions);
 
+        console.log("Base DATA: ", JSON.stringify(sendDataWithOptions));
+
         fetch("http://localhost:8080/api/save", {
             headers: {
                 "content-type":"application/json"
@@ -944,7 +962,210 @@
             })
         }).then(res => {
             console.log("Request complete! response:", res)
+        }).catch(err => {
+            alert("Error Saving");
         });
+    }
+
+
+    /*
+    * Testing code
+    *
+    * 
+    * 
+    */
+    export function testLesson() {
+        runTest(externalData, components);
+    }
+
+    function runTest(lessonID, components) {
+        //TODO Store the simulation state before testing and restor it after testing
+        var testResults;
+        var success = true;
+        var passes;
+
+        switch (lessonID) {
+            case 10:
+                testResults = testLesson10(components);
+                passes = CompareTests(testResults, 10);
+                break;
+            case 11:
+                testResults = testLesson11(components);
+                passes = CompareTests(testResults, 11);
+                break;
+        }
+
+        displayTestResults = true;
+        finalTestResultsPasses = passes;
+        finalTestResults = testResults;
+
+        //Did the user pass the lesson, tell them and mark it complete
+        for (var i = 0; i < passes.length; i++)
+            if (passes[i] === "fail")
+                success = false;
+
+        if (!success) return;
+
+        //Alert user and return to main page and tell the server its complete
+        fetch("http://localhost:8080/updateLessonStatus", {
+            headers: {
+                "content-type":"application/json"
+            },
+            method: "POST", 
+            body: JSON.stringify({
+                lessonID: externalData,
+                status: "Completed",
+            })
+        }).then(res => {
+            console.log("Request complete! response:", res)
+        })
+        // .catch(err => {
+        //     alert("Network Error, returning to main site");
+        //     window.location.replace("https://learnlogic.today");
+        // });
+
+        islessonComplete = true;
+
+        //Print the results
+        // console.log("Success?: ", success);
+        // for (var i = 0; i < testResults.length; i++) {
+        //     console.log("Test Number: " + i);
+        //     for (var k = 0; k < testResults[i].inputs.length; k++) {
+        //         console.log("Input " + k + " : " + testResults[i].inputs[k]);
+        //     }
+        //     for (var j = 0; j < testResults[i].inputs.length; j++) {
+        //         console.log("Outpu " + j + " : " + testResults[i].outputs[j]);
+        //     }
+        // }
+    }
+
+    function CompareTests(test, lessonID) {
+        var lesson10Results = [[0],[1]];
+        var lesson11Results = [[0],[0],[0],[1]];
+        
+        var testAgainst = [];
+        switch (lessonID) {
+            case 10:
+                testAgainst = lesson10Results;
+                break;
+            case 11:
+                testAgainst = lesson11Results;
+                break;
+        }
+
+        console.log("Test: ", test);
+
+        var passes = [];
+        for (var i = 0; i < test.length; i++) {
+            //Inputs Comparisons
+            // for (var k = 0; k < test[i].inputs; k++) {
+                
+            // }
+            //Output Comparisons
+            for (var k = 0; k < test[i].outputs.length; k++) {
+                console.log("pass: " + i)
+                console.log("side1: ", test[i].outputs[k]);
+                console.log("side2: ", testAgainst[i][k]);
+                if (test[i].outputs[k] === testAgainst[i][k])
+                    passes.push("pass");
+                else
+                    passes.push("fail");
+            }
+        }
+
+        return passes;
+    }
+
+    function turnOnOrOffSwitch(isOn, swID) {
+        for (var i = 0; i < components.length; i++) {
+            if (components[i].id === swID) {
+                if (isOn)
+                    components[i].output_states[0] = 1;
+                else
+                    components[i].output_states[0] = 0;
+
+                return components[i].output_states[0];
+            }
+        }
+    }
+
+    function checkLight(lightID) {
+        for (var i = 0; i < components.length; i++) {
+            if (components[i].id === lightID) {
+                return getComponent(components[i].inputs[0].gate_id).output_states[0];
+            }
+        }
+    }
+
+    class Test {
+        constructor() {
+            this.inputs = [];
+            this.outputs = [];
+        }
+        addInput(input) {
+            this.inputs.push(input);
+        }
+        addOutput(output) {
+            this.outputs.push(output);
+        }
+    }
+
+    function testLesson10(components) {
+        //test if a not effect occurs
+        //2 tests
+        var results = [];
+        var test = new Test();
+        //SW1 on
+        test = new Test();
+        test.addInput(turnOnOrOffSwitch(1, "sw1")); //Turns on switch 1
+        simulatate();
+        test.addOutput(checkLight("out1"));
+        results.push(test);
+        //SW1 off
+        test = new Test();
+        test.addInput(turnOnOrOffSwitch(0, "sw1")); //Turns on switch 1
+        simulatate();
+        test.addOutput(checkLight("out1"));
+        results.push(test);
+
+        return results;
+    }
+
+    function testLesson11(components) {
+        //And gate test
+        //4 tests
+        var results = [];
+        var test = new Test();
+        //off off
+        test = new Test();
+        test.addInput(turnOnOrOffSwitch(0, "sw1")); //Turns off switch 1
+        test.addInput(turnOnOrOffSwitch(0, "sw2")); //Turns off switch 2
+        simulatate();
+        test.addOutput(checkLight("out1"));
+        results.push(test);
+        //off on
+        test = new Test();
+        test.addInput(turnOnOrOffSwitch(0, "sw1")); //Turns off switch 1
+        test.addInput(turnOnOrOffSwitch(1, "sw2")); //Turns off switch 2
+        simulatate();
+        test.addOutput(checkLight("out1"));
+        results.push(test);
+        //on off
+        test = new Test();
+        test.addInput(turnOnOrOffSwitch(1, "sw1")); //Turns off switch 1
+        test.addInput(turnOnOrOffSwitch(0, "sw2")); //Turns off switch 2
+        simulatate();
+        test.addOutput(checkLight("out1"));
+        results.push(test);
+        //on on
+        test = new Test();
+        test.addInput(turnOnOrOffSwitch(1, "sw1")); //Turns off switch 1
+        test.addInput(turnOnOrOffSwitch(1, "sw2")); //Turns off switch 2
+        simulatate();
+        test.addOutput(checkLight("out1"));
+        results.push(test);
+
+        return results;
     }
 
 </script>
@@ -977,7 +1198,7 @@
     }
     #zoomLayer {
         /* background-image: url(./grid_dark.png); */
-        background-color: #1F2933;
+        background-color: #323F4B;
         width: 2048px;
         height: 2048px;
     }
@@ -999,19 +1220,95 @@
     }
 
     button {
-        width: 50px;
-        height: 100%;
-    }
+		/* width: 90%; */
+        width: 20%;
+		background-color: #323F4B;
+		margin: 5px;
+		border: 0px;
+		transition: 0.3s;
+        color: white;
+	}
+	button:hover {
+		background-color: #009688;
+	}
 
     p {
         margin: 8px;
+    }
+
+    /* .right {
+        width: 100px;
+    } */
+
+    .results {
+        background-color: #3E4C59;
+        right: 30px;
+        bottom: 175px;
+        width: 300px;
+        height: 200px;
+        z-index: 2;
+        position: absolute;
+
+        text-align: center;
+        border-color: #009688;
+        border-style: solid;
+        border-radius: 15px;
+
+        overflow: auto;
+    }
+
+    .whiteText {
+        color: #E4E7EB;
+    }
+
+    .fullScreen {
+        background-color: #1F2933;
+    }
+
+    .resTitle {
+        color: #E4E7EB;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .alert {
+        display: flex;
+        /* justify-content: center; */
+        align-items: center;
+        flex-direction: column;
+        top: 10%;
+    }
+
+    h1 {
+        color: white;
     }
 
 </style>
 
 <svelte:window on:mouseup={mouseUp} on:mousemove={mouseMove} on:keydown={keypressing}/>
 
+{#if islessonComplete}
+    <div class="fullScreen">
+        <div class="alert">
+            <h1>Lesson Completed</h1>
+            <button on:click={() => islessonComplete = false}>Close</button>
+            <button on:click={() => applicationState(0, 0, 0)}>Return to menu</button>
+        </div>
+    </div>
+{:else}
 <div class="workspace" bind:this={workspaceDom}>
+    {#if displayTestResults} 
+    <div class="results">
+        <div class="options_content">
+            <p class="resTitle">Test Results<p>
+            <table>
+                {#each finalTestResultsPasses as pass, i}
+                    <p class="whiteText">Test {i}: {pass}</p>
+                {/each}
+            </table>
+        </div>
+    </div>
+    {/if}
     {#if isGateSelected}
     <div class="options">
         <div class="options_content">
@@ -1063,3 +1360,4 @@
         {/if}
     </div>
 </div>
+{/if}

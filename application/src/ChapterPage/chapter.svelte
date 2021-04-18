@@ -16,6 +16,9 @@
                 console.log(res);
                 userData = res;
             });
+        }).catch(err => {
+            alert("Network Error, returning to main site");
+            window.location.replace("https://learnlogic.today");
         });
     })
     
@@ -31,13 +34,10 @@
                     name: 'AND Gate',
                     lessonID: 11
                 },
-                { name: 'Test', lessonID: 12 },
-                { name: 'Test', lessonID: 13 },
-                { name: 'Test', lessonID: 14 },
-                { name: 'Test', lessonID: 15 },
-                { name: 'Test', lessonID: 16 },
-                { name: 'Test', lessonID: 17 },
-                { name: 'Test', lessonID: 18 },
+                { name: 'OR Gate', lessonID: 12 },
+                { name: 'NOR Gate', lessonID: 13 },
+                { name: 'XOR Gate', lessonID: 14 },
+                { name: 'NOT Gate', lessonID: 15 },
             ]
         },
         { 
@@ -45,11 +45,11 @@
             lessons: [
                 {
                     name: 'SR-Latch',
-                    lessonID: 10
+                    lessonID: 16
                 },
                 {
                     name: 'D-Latch',
-                    lessonID: 11
+                    lessonID: 17
                 },
             ]
         },
@@ -59,7 +59,20 @@
         console.log("lesssonSelectionCallback: ", lessonID);
 
         //Load the logic sim and pass the lessonID to it
-        applicationState("sim", lessonID);
+        var isProgress = false;
+        for (var i = 0; i < userData.lessonStatus; i++) {
+            if (userData.lessonStatus[i].lessonID === lessonID) {
+                switch (lessons[i].status) {
+                    case "Completed":
+                        isProgress = true;
+                    case "Progress":
+                        isProgress = true;
+                    default:
+                        isProgress = false;
+                }
+            }
+        }
+        applicationState("sim", lessonID, isProgress);
     }
 
 </script>
@@ -81,18 +94,20 @@
     }
 </style>
 
+{#if userData}
 <div class="main">
-    <Header></Header>
+    <Header userName={userData.username}></Header>
     {#if userData}
         <div class="chapters">
             {#each titles as title, i}
                 <Title titleInfo={title}></Title>
                 <div class="lessons">
                     {#each title.lessons as card, k}
-                        <Tile cardInfo={card} lessons={userData.lessonsCompleted} pressed={lesssonSelectionCallback}></Tile>
+                        <Tile cardInfo={card} lessons={userData.lessonStatus} pressed={lesssonSelectionCallback}></Tile>
                     {/each}
                 </div>
             {/each}
         </div>
     {/if}
 </div>
+{/if}

@@ -53,6 +53,7 @@ router.post('/api/save', appController.saveUserLessonData);
 //User must be logged in to access this
 router.get('/profile', /* pageController.auth, */ profileController.profile);
 router.get('/userInfo', /* pageController.auth, */ appController.getUserData);
+router.post('/updateLessonStatus', appController.updateLessonStatus);
 
 //Export the router for the main file
 module.exports = router;

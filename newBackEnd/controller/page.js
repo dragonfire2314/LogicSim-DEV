@@ -1,9 +1,9 @@
 function renderPage(req, res, page, stuffToSend) {
-    console.log("Session: ", req.session);
+    // console.log("Session: ", req.session);
 
     var isLoggedIn = false;
 
-    console.log(req.session);
+    // console.log(req.session);
 
     if (req.session.passport)
         var isLoggedIn = ((req.session.passport.user) ? true : false);

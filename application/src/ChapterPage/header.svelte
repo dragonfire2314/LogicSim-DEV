@@ -2,8 +2,10 @@
     import { onMount } from 'svelte';
 
 	onMount(async () => {
-        //document.addEventListener('contextmenu', event => event.preventDefault());       
+        //document.addEventListener('contextmenu', event => event.preventDefault());    
     });
+
+    export let userName;
 
 </script>
 
@@ -40,7 +42,7 @@
     }
     .logout_button {
         margin: auto;
-        background-color: #c49270; /* Green */
+        background-color: #bd53b2;
         border: none;
         color: black;
         padding: 10px 28px;
@@ -48,9 +50,18 @@
         text-decoration: none;
         display: inline-block;
         font-size: 16px;
-        border-radius: 10%;
+        border-radius: 10px;
         font-size: 22px;
         font-weight: 600;
+        transition: 0.3s;
+    }
+    .logout_button:hover {
+        background-color: #ab2048;
+    }
+
+    form {
+        padding: 10px 28px;
+        margin: auto;
     }
 
 </style>
@@ -58,9 +69,11 @@
 <div class="main">
     <div class="profile">
         <img class="picture" alt="Profile" src="build/prof_icon_fix.png">
-        <p class="name">User Name</p>
+        <p class="name">{userName}</p>
     </div>
     <div class="logout">
-        <button class="logout_button">Logout</button>
+        <form action="/logout">
+            <button class="logout_button">Logout</button>
+        </form>
     </div>
 </div>
